@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>config builder</title>
+</head>
+<body>
+    <hr />
+    Показать: <a th:href="@{/category}" th:text="${filter_title}" ></a>
+    | <a th:href="@{/template}">Редактор шаблонов</a>
+    <hr />
+    <span th:each="template : ${templates}">
+        <a th:href="@{/builder/{id} (id=${template.getId()})}" th:text="${template.getTitle()}"></a>
+        <br />
+    </span>
+</body>
+</html>

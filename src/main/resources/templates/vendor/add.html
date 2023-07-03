@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>config builder</title>
+</head>
+<body>
+    <form th:method="post" th:action="@{/vendor}" th:object="${vendor}">
+        <label for="name">Название категории</label>
+        <input type="text" id="name" th:field="*{name}" />
+        <br />
+        <label for="title">Заголовок категории</label>
+        <input type="text" id="title" th:field="*{title}" />
+        <br />
+        <button type="submit">Добавить</button>
+    </form>
+</body>
+</html>

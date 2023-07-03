@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>config builder</title>
+</head>
+<body>
+    Выберете категорию:<br />
+    <a th:href="@{/{path} (path=${path})}">Все</a><br />
+    <span th:each="vendor : ${vendors}">
+        <a th:href="@{/{path}?filter={filter} (path=${path}, filter=${vendor.getName()})}" th:text="${vendor.getTitle()}"></a><br />
+    </span>
+</body>
+</html>

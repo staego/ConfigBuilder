@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>config builder</title>
+</head>
+<body>
+  <form th:method="delete" th:action="@{/template/{id} (id=${template.getId()})}">
+    Вы точно хотите удалить <span th:text="${template.getTitle()}"></span><br />
+    <a th:href="@{/template}">Отмена</a>
+    <button type="submit">Удалить</button>
+  </form>
+</body>
+</html>

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>config builder</title>
+</head>
+<body>
+<hr />
+Показать: <a th:href="@{/template/category}" th:text="${filter_title}"></a>
+ | <a th:href="@{/vendor}">Изменить</a>
+<hr />
+<div>
+  <a th:href="@{/template/add}">Добавить</a>
+  <br /><br />
+  <span th:each="template : ${templates}">
+        <a th:href="@{/template/{id} (id=${template.getId()})}" th:text="${template.getTitle()}"></a>
+        <a th:href="@{/template/{id}/delete (id=${template.getId()})}">   Удалить</a>
+        <br />
+  </span>
+</div>
+</body>
+</html>

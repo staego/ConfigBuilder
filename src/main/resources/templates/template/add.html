@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>config builder</title>
+</head>
+<body>
+    <form th:method="post" th:action="@{/template}" th:object="${template}">
+        <label for="vendor">Категория</label>
+        <select id="vendor" th:field="*{vendor}">>
+            <option th:each="vendor : ${vendors}"
+                    th:value="${vendor.getId()}" th:text="${vendor.getTitle()}"></option>
+        </select>
+        <br/>
+        <label for="title">Название шаблона</label>
+        <input type="text" id="title" th:field="*{title}" />
+        <br/>
+        <label for="text">Шаблон</label><br/>
+        <textarea id="text" th:field="*{text}" cols="30" rows="7"></textarea>
+        <br/>
+        <button type="submit">Добавить</button>
+    </form>
+</body>
+</html>
