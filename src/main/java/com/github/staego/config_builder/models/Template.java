@@ -2,6 +2,9 @@ package com.github.staego.config_builder.models;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Table(name = "ttemplate")
 public class Template {
@@ -18,6 +21,14 @@ public class Template {
     @ManyToOne
     @JoinColumn(name = "vendor_id", referencedColumnName = "id")
     private Vendor vendor;
+
+    @ManyToMany
+    @JoinTable(
+            name = "template_component",
+            joinColumns = @JoinColumn(name = "template_id"),
+            inverseJoinColumns = @JoinColumn(name = " component_id")
+    )
+    private final List<Component> components = new ArrayList<>();
 
     public Template() {
     }
@@ -59,5 +70,13 @@ public class Template {
 
     public void setVendor(Vendor vendor) {
         this.vendor = vendor;
+    }
+
+    public List<Component> getComponents() {
+        return components.stream().toList();
+    }
+
+    public void setComponents(Component components) {
+        this.components.add(components);
     }
 }

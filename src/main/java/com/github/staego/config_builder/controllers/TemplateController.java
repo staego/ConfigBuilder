@@ -1,9 +1,11 @@
 package com.github.staego.config_builder.controllers;
 
+import com.github.staego.config_builder.models.Component;
 import com.github.staego.config_builder.models.Template;
-import com.github.staego.config_builder.models.Vendor;
+import com.github.staego.config_builder.repositories.ComponentRepository;
 import com.github.staego.config_builder.repositories.TemplateRepository;
 import com.github.staego.config_builder.repositories.VendorRepository;
+import com.github.staego.config_builder.utils.TemplateEngine;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -18,10 +20,12 @@ public class TemplateController {
     private static final String TEMPLATE_PATH = "template/";
     private final VendorRepository vendorRepository;
     private final TemplateRepository templateRepository;
+    private final ComponentRepository componentRepository;
 
-    public TemplateController(VendorRepository vendorRepository, TemplateRepository templateRepository) {
+    public TemplateController(VendorRepository vendorRepository, TemplateRepository templateRepository, ComponentRepository componentRepository) {
         this.vendorRepository = vendorRepository;
         this.templateRepository = templateRepository;
+        this.componentRepository = componentRepository;
     }
 
     @GetMapping("/category")
@@ -57,6 +61,17 @@ public class TemplateController {
 
     @PostMapping
     public String add(@ModelAttribute("template") Template template) {
+        for (String component : TemplateEngine.parse(template.getText())) {
+            List<Component> components = componentRepository.findByName(component);
+            if (components.isEmpty()) {
+                Component newComponent = new Component();
+                newComponent.setName(component);
+                componentRepository.save(newComponent);
+                template.setComponents(newComponent);
+            } else {
+                template.setComponents(components.get(0));
+            }
+        }
         templateRepository.save(template);
         return REDIRECT;
     }
@@ -75,6 +90,17 @@ public class TemplateController {
 
     @PutMapping("/{id}")
     public String edit(@PathVariable("id") int id, @ModelAttribute("template") Template template) {
+        for (String component : TemplateEngine.parse(template.getText())) {
+            List<Component> components = componentRepository.findByName(component);
+            if (components.isEmpty()) {
+                Component newComponent = new Component();
+                newComponent.setName(component);
+                componentRepository.save(newComponent);
+                template.setComponents(newComponent);
+            } else {
+                template.setComponents(components.get(0));
+            }
+        }
         templateRepository.save(template);
         return REDIRECT;
     }

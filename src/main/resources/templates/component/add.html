@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>config builder</title>
+</head>
+<body>
+    <form th:method="post" th:action="@{/component}" th:object="${component}">
+        <label for="name">Название компонета</label>
+        <input type="text" id="name" th:field="*{name}" />
+        <br />
+        <label for="title">Заголовок компонента</label>
+        <input type="text" id="title" th:field="*{title}" />
+        <br />
+        <button type="submit">Добавить</button>
+    </form>
+</body>
+</html>

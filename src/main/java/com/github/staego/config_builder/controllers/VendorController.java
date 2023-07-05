@@ -50,7 +50,6 @@ public class VendorController {
 
     @PutMapping("/{id}")
     public String edit(@PathVariable("id") int id, @ModelAttribute("vendor") Vendor vendor) {
-        System.out.println(vendor.getId());
         vendorRepository.save(vendor);
         return REDIRECT;
     }

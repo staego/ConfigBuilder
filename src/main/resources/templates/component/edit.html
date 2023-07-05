@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>config builder</title>
+</head>
+<body>
+    <form th:method="put" th:action="@{/component/{id} (id=${component.getId()})}" th:object="${component}">
+
+        <label for="name">Название компонента : </label>
+        <input type="text" id="name" th:value="${component.getName()}" disabled /><br />
+        <input type="hidden" th:field="*{name}" /><br />
+
+        <label for="title">Заголовок компонента</label>
+        <input type="text" id="title" th:field="*{title}" /><br />
+
+        <button type="submit">Изменить</button>
+    </form>
+</body>
+</html>

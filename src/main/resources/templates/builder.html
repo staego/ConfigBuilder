@@ -5,6 +5,13 @@
   <title>config builder</title>
 </head>
 <body>
-
+<form th:method="post" th:action="@{/build/{id} (id=${id})}" name="form">
+  <span th:each="component: ${components}">
+    <label th:for="${component.getName()}" th:text="${component.getTitle()}"></label>
+    <input type="text" th:id="${component.getName()}" th:name="${component.getName()}" />
+    <br />
+  </span>
+  <button type="submit">Выполнить</button>
+</form>
 </body>
 </html>
