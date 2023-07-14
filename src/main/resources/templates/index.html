@@ -6,8 +6,12 @@
 </head>
 <body>
     <hr />
-    Показать: <a th:href="@{/category}" th:text="${filter_title}" ></a>
+    <a th:href="@{/}">Главная</a>
     | <a th:href="@{/template}">Редактор шаблонов</a>
+    | <a th:href="@{/template/vendor}">Редактор категорий</a>
+    | <a th:href="@{/component}">Редактор компонентов</a>
+    <hr />
+    Показать: <a th:href="@{/category}" th:text="${filter_title}" ></a>
     <hr />
     <span th:each="template : ${templates}">
         <a th:href="@{/builder/{id} (id=${template.getId()})}" th:text="${template.getTitle()}"></a>

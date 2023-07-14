@@ -5,6 +5,10 @@
     <title>config builder</title>
 </head>
 <body>
+    <hr />
+    <a th:href="@{/}">Главная</a>
+    | <a th:href="@{/component}">Назад</a>
+    <hr />
     <form th:method="post" th:action="@{/component}" th:object="${component}">
         <label for="name">Название компонета</label>
         <input type="text" id="name" th:field="*{name}" />

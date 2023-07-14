@@ -1,123 +1,85 @@
 package com.github.staego.config_builder.controllers;
 
-import com.github.staego.config_builder.models.Component;
 import com.github.staego.config_builder.models.Template;
-import com.github.staego.config_builder.repositories.ComponentRepository;
-import com.github.staego.config_builder.repositories.TemplateRepository;
-import com.github.staego.config_builder.repositories.VendorRepository;
-import com.github.staego.config_builder.utils.TemplateEngine;
+import com.github.staego.config_builder.models.Vendor;
+import com.github.staego.config_builder.services.TemplateService;
+import com.github.staego.config_builder.services.VendorService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
-import java.util.Optional;
 
 @Controller
 @RequestMapping("/template")
 public class TemplateController {
     private static final String REDIRECT =  "redirect:/template";
     private static final String TEMPLATE_PATH = "template/";
-    private final VendorRepository vendorRepository;
-    private final TemplateRepository templateRepository;
-    private final ComponentRepository componentRepository;
+    private final VendorService vendorService;
+    private final TemplateService templateService;
 
-    public TemplateController(VendorRepository vendorRepository, TemplateRepository templateRepository, ComponentRepository componentRepository) {
-        this.vendorRepository = vendorRepository;
-        this.templateRepository = templateRepository;
-        this.componentRepository = componentRepository;
+    public TemplateController(VendorService vendorService, TemplateService templateService) {
+        this.vendorService = vendorService;
+        this.templateService = templateService;
     }
 
     @GetMapping("/category")
     public String category(Model model) {
-        model.addAttribute("vendors", vendorRepository.findAll());
-        model.addAttribute("path", "template");
+        model.addAttribute("vendors", vendorService.findAll());
+        model.addAttribute("path", "/template");
         return "category";
     }
 
     @GetMapping
-    public String index(@RequestParam(value = "filter", required = false) String filter, Model model) {
-        List<Template> templates;
-        String filter_title;
+    public String index(Model model) {
+        model.addAttribute("templates", templateService.findAll());
+        model.addAttribute("filter_title", "Все");
+        return TEMPLATE_PATH + "index";
+    }
 
-        if (filter == null) {
-            templates = templateRepository.findAll();
-            filter_title = "Все";
-        } else {
-            templates = vendorRepository.findByName(filter).get(0).getTemplates();
-            filter_title = vendorRepository.findByName(filter).get(0).getTitle();
-        }
-        model.addAttribute("templates", templates);
-        model.addAttribute("filter_title", filter_title);
+    @GetMapping("/filter/{filter}")
+    public String indexWi(@PathVariable String filter, Model model) {
+        Vendor vendor = vendorService.findByName(filter);
+        model.addAttribute("templates", vendor.getTemplates());
+        model.addAttribute("filter_title", vendor.getTitle());
         return TEMPLATE_PATH + "index";
     }
 
     @GetMapping("/add")
     public String add(Model model) {
-        model.addAttribute("vendors", vendorRepository.findAll());
+        model.addAttribute("vendors", vendorService.findAll());
         model.addAttribute("template", new Template());
         return TEMPLATE_PATH + "add";
     }
 
     @PostMapping
     public String add(@ModelAttribute("template") Template template) {
-        for (String component : TemplateEngine.parse(template.getText())) {
-            List<Component> components = componentRepository.findByName(component);
-            if (components.isEmpty()) {
-                Component newComponent = new Component();
-                newComponent.setName(component);
-                componentRepository.save(newComponent);
-                template.setComponents(newComponent);
-            } else {
-                template.setComponents(components.get(0));
-            }
-        }
-        templateRepository.save(template);
+        templateService.save(template);
         return REDIRECT;
     }
 
     @GetMapping("/{id}")
     public String edit(@PathVariable("id") int id, Model model) {
-        Optional<Template> template = templateRepository.findById(id);
-        if (template.isEmpty()) {
-            return REDIRECT;
-        }
-        model.addAttribute("template", template.get());
-        model.addAttribute("vendors", vendorRepository.findAll());
-        model.addAttribute("active_id", template.get().getVendor().getId());
+        Template template = templateService.findById(id);
+        model.addAttribute("vendors", vendorService.findAll());
+        model.addAttribute("template", template);
+        model.addAttribute("active_id", template.getVendor().getId());
         return TEMPLATE_PATH + "edit";
     }
 
     @PutMapping("/{id}")
     public String edit(@PathVariable("id") int id, @ModelAttribute("template") Template template) {
-        for (String component : TemplateEngine.parse(template.getText())) {
-            List<Component> components = componentRepository.findByName(component);
-            if (components.isEmpty()) {
-                Component newComponent = new Component();
-                newComponent.setName(component);
-                componentRepository.save(newComponent);
-                template.setComponents(newComponent);
-            } else {
-                template.setComponents(components.get(0));
-            }
-        }
-        templateRepository.save(template);
+        templateService.save(template);
         return REDIRECT;
     }
 
     @GetMapping("/{id}/delete")
     public String delete(@PathVariable("id") int id, Model model) {
-        Optional<Template> template = templateRepository.findById(id);
-        if (template.isEmpty()) {
-            return REDIRECT;
-        }
-        model.addAttribute("template", template.get());
+        model.addAttribute("template", templateService.findById(id));
         return TEMPLATE_PATH + "delete";
     }
 
     @DeleteMapping("/{id}")
     public String delete(@PathVariable("id") int id) {
-        templateRepository.deleteById(id);
+        templateService.deleteById(id);
         return REDIRECT;
     }
 }

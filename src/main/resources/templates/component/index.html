@@ -5,14 +5,17 @@
     <title>config builder</title>
 </head>
 <body>
-<div>
-    <a th:href="@{/component/add}">Добавить</a>
-    <br /><br />
-    <span th:each="component : ${components}">
-        <a th:href="@{/component/{id} (id=${component.getId()})}" th:text="${component.getTitle()}"></a>
-        <a th:href="@{/component/{id}/delete (id=${component.getId()})}"  th:if="${component.isCustomized()}"> Удалить</a>
-        <br />
-    </span>
-</div>
+    <hr />
+    <a th:href="@{/}">Главная</a>
+    <hr />
+    <div>
+        <a th:href="@{/component/add}">Добавить</a>
+        <br /><br />
+        <span th:each="component : ${components}">
+            <a th:href="@{/component/{id} (id=${component.getId()})}" th:text="${component.getTitle()}"></a>
+            <a th:href="@{/component/{id}/delete (id=${component.getId()})}"  th:if="${component.isCustomized()}"> | Удалить</a>
+            <br />
+        </span>
+    </div>
 </body>
 </html>

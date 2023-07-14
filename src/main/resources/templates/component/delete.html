@@ -5,6 +5,9 @@
   <title>config builder</title>
 </head>
 <body>
+  <hr />
+  <a th:href="@{/}">Главная</a>
+  <hr />
   <form th:method="delete" th:action="@{/component/{id} (id=${component.getId()})}">
     Вы точно хотите удалить настройки компонента <span th:text="${component.getTitle()}"></span><br />
     <a th:href="@{/component}">Отмена</a>

@@ -5,11 +5,14 @@
     <title>config builder</title>
 </head>
 <body>
+    <hr />
+    <a th:href="@{/}">Главная</a>
+    | <a th:href="@{/component}">Назад</a>
+    <hr />
     <form th:method="put" th:action="@{/component/{id} (id=${component.getId()})}" th:object="${component}">
 
         <label for="name">Название компонента : </label>
-        <input type="text" id="name" th:value="${component.getName()}" disabled /><br />
-        <input type="hidden" th:field="*{name}" /><br />
+        <input type="text" id="name" th:field="*{name}" th:value="${component.getName()}" /><br />
 
         <label for="title">Заголовок компонента</label>
         <input type="text" id="title" th:field="*{title}" /><br />

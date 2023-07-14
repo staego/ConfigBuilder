@@ -6,9 +6,12 @@
 </head>
 <body>
     Выберете категорию:<br />
-    <a th:href="@{/{path} (path=${path})}">Все</a><br />
+    <a th:href="@{{path} (path=${path})}">Все</a><br />
     <span th:each="vendor : ${vendors}">
-        <a th:href="@{/{path}?filter={filter} (path=${path}, filter=${vendor.getName()})}" th:text="${vendor.getTitle()}"></a><br />
+        <span th:switch="${path}">
+            <a th:case="'/'" th:href="@{/filter/{filter} (filter=${vendor.getName()})}" th:text="${vendor.getTitle()}"></a>
+            <a th:case="*" th:href="@{{path}/filter/{filter} (path=${path}, filter=${vendor.getName()})}" th:text="${vendor.getTitle()}"></a>
+        </span><br />
     </span>
 </body>
 </html>

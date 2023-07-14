@@ -5,7 +5,11 @@
     <title>config builder</title>
 </head>
 <body>
-    <form th:method="put" th:action="@{/vendor/{id} (id=${vendor.getId()})}" th:object="${vendor}">
+    <hr />
+    <a th:href="@{/}">Главная</a>
+    | <a th:href="@{/template/vendor}">Назад</a>
+    <hr />
+    <form th:method="put" th:action="@{/template/vendor/{id} (id=${vendor.getId()})}" th:object="${vendor}">
 
         <label for="name">Название категории</label>
         <input type="text" id="name" th:field="*{name}" /><br />

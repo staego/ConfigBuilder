@@ -5,6 +5,9 @@
   <title>config builder</title>
 </head>
 <body>
+  <hr />
+  <a th:href="@{/}">Главная</a>
+  <hr />
   <form th:method="delete" th:action="@{/template/{id} (id=${template.getId()})}">
     Вы точно хотите удалить <span th:text="${template.getTitle()}"></span><br />
     <a th:href="@{/template}">Отмена</a>

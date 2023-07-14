@@ -5,9 +5,13 @@
     <title>config builder</title>
 </head>
 <body>
+    <hr />
+    <a th:href="@{/}">Главная</a>
+    | <a th:href="@{/template}">Назад</a>
+    <hr />
     <form th:method="post" th:action="@{/template}" th:object="${template}">
         <label for="vendor">Категория</label>
-        <select id="vendor" th:field="*{vendor}">>
+        <select id="vendor" th:field="*{vendor}">
             <option th:each="vendor : ${vendors}"
                     th:value="${vendor.getId()}" th:text="${vendor.getTitle()}"></option>
         </select>
