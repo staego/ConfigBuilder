@@ -4,8 +4,10 @@ import com.github.staego.config_builder.models.Template;
 import com.github.staego.config_builder.models.Vendor;
 import com.github.staego.config_builder.services.TemplateService;
 import com.github.staego.config_builder.services.VendorService;
+import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
@@ -51,7 +53,10 @@ public class TemplateController {
     }
 
     @PostMapping
-    public String add(@ModelAttribute("template") Template template) {
+    public String add(@ModelAttribute("template") @Valid Template template, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return TEMPLATE_PATH + "add";
+        }
         templateService.save(template);
         return REDIRECT;
     }
@@ -66,7 +71,10 @@ public class TemplateController {
     }
 
     @PutMapping("/{id}")
-    public String edit(@PathVariable("id") int id, @ModelAttribute("template") Template template) {
+    public String edit(@PathVariable("id") int id, @ModelAttribute("template") @Valid Template template, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return TEMPLATE_PATH + "edit";
+        }
         templateService.save(template);
         return REDIRECT;
     }

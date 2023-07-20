@@ -5,24 +5,33 @@
     <title>config builder</title>
 </head>
 <body>
+
     <hr />
     <a th:href="@{/}">Главная</a>
     | <a th:href="@{/template}">Назад</a>
     <hr />
+
     <form th:method="put" th:action="@{/template/{id} (id=${template.getId()})}" th:object="${template}">
+
         <label for="vendor">Категория</label>
         <select id="vendor" th:name="vendor">
             <option th:each="vendor : ${vendors}"
                     th:value="${vendor.getId()}" th:text="${vendor.getTitle()}" th:selected="${vendor.isActive(active_id)}"></option>
         </select>
         <br/>
+
         <label for="title">Название шаблона</label>
         <input type="text" id="title" th:field="*{title}" />
+        <div th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></div>
         <br/>
+
         <label for="text">Шаблон</label><br/>
         <textarea id="text" th:field="*{text}" cols="30" rows="7"></textarea>
+        <div th:if="${#fields.hasErrors('text')}" th:errors="*{text}"></div>
         <br/>
+
         <button type="submit">Изменить</button>
+
     </form>
 </body>
 </html>

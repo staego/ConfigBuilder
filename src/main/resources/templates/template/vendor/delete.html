@@ -5,13 +5,19 @@
   <title>config builder</title>
 </head>
 <body>
+
   <hr />
   <a th:href="@{/}">Главная</a>
   <hr />
+
   <form th:method="delete" th:action="@{/template/vendor/{id} (id=${vendor.getId()})}">
-    Вы точно хотите удалить <span th:text="${vendor.getTitle()}"></span><br />
+
+    Вы точно хотите удалить <span th:text="${vendor.getTitle()}"></span>
+    <br />
+
     <a th:href="@{/template/vendor}">Отмена</a>
     <button type="submit">Удалить</button>
+
   </form>
 </body>
 </html>

@@ -5,10 +5,12 @@
     <title>config builder</title>
 </head>
 <body>
+
     <hr />
     <a th:href="@{/}">Главная</a>
     | <a th:href="@{/template}">Назад</a>
     <hr />
+
     <form th:method="post" th:action="@{/template}" th:object="${template}">
         <label for="vendor">Категория</label>
         <select id="vendor" th:field="*{vendor}">
@@ -16,13 +18,19 @@
                     th:value="${vendor.getId()}" th:text="${vendor.getTitle()}"></option>
         </select>
         <br/>
+
         <label for="title">Название шаблона</label>
         <input type="text" id="title" th:field="*{title}" />
+        <div th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></div>
         <br/>
+
         <label for="text">Шаблон</label><br/>
         <textarea id="text" th:field="*{text}" cols="30" rows="7"></textarea>
+        <div th:if="${#fields.hasErrors('text')}" th:errors="*{text}"></div>
         <br/>
+
         <button type="submit">Добавить</button>
+
     </form>
 </body>
 </html>

@@ -1,11 +1,9 @@
 package com.github.staego.config_builder.models;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.util.HashSet;
-import java.util.Set;
 
 @NoArgsConstructor
 @Data
@@ -16,9 +14,11 @@ public class Component {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
+    @NotEmpty(message = "Поле не должно быть пустым")
     @Column
     private String name;
 
+    @NotEmpty(message = "Поле не должно быть пустым")
     @Column
     private String title;
 

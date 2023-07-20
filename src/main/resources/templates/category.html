@@ -5,13 +5,19 @@
     <title>config builder</title>
 </head>
 <body>
-    Выберете категорию:<br />
-    <a th:href="@{{path} (path=${path})}">Все</a><br />
+    Выберете категорию:
+    <br />
+
+    <a th:href="@{{path} (path=${path})}">Все</a
+    <br />
+
     <span th:each="vendor : ${vendors}">
         <span th:switch="${path}">
             <a th:case="'/'" th:href="@{/filter/{filter} (filter=${vendor.getName()})}" th:text="${vendor.getTitle()}"></a>
             <a th:case="*" th:href="@{{path}/filter/{filter} (path=${path}, filter=${vendor.getName()})}" th:text="${vendor.getTitle()}"></a>
-        </span><br />
+        </span>
+        <br />
+
     </span>
 </body>
 </html>

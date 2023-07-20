@@ -5,12 +5,15 @@
     <title>config builder</title>
 </head>
 <body>
+
     <hr />
     <a th:href="@{/}">Главная</a>
     <hr />
+
     <div>
         <a th:href="@{/template/vendor/add}">Добавить</a>
         <br /><br />
+
         <span th:each="vendor : ${vendors}">
             <a th:href="@{/template/vendor/{id} (id=${vendor.getId()})}" th:text="${vendor.getTitle()}"></a>
             <a th:href="@{/template/vendor/{id}/delete (id=${vendor.getId()})}"> | Удалить</a>

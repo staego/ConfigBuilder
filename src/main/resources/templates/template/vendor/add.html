@@ -5,18 +5,26 @@
     <title>config builder</title>
 </head>
 <body>
+
     <hr />
     <a th:href="@{/}">Главная</a>
     | <a th:href="@{/template/vendor}">Назад</a>
     <hr />
+
     <form th:method="post" th:action="@{/template/vendor}" th:object="${vendor}">
+
         <label for="name">Название категории</label>
         <input type="text" id="name" th:field="*{name}" />
+        <div th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
         <br />
+
         <label for="title">Заголовок категории</label>
         <input type="text" id="title" th:field="*{title}" />
+        <div th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></div>
         <br />
+
         <button type="submit">Добавить</button>
+
     </form>
 </body>
 </html>

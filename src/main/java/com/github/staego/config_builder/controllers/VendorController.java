@@ -2,9 +2,11 @@ package com.github.staego.config_builder.controllers;
 
 import com.github.staego.config_builder.models.Vendor;
 import com.github.staego.config_builder.services.VendorService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
@@ -32,7 +34,10 @@ public class VendorController {
     }
 
     @PostMapping
-    public String add(@ModelAttribute("vendor") Vendor vendor) {
+    public String add(@ModelAttribute("vendor") @Valid Vendor vendor, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return TEMPLATE_PATH + "add";
+        }
         vendorService.save(vendor);
         return REDIRECT;
     }
@@ -44,7 +49,10 @@ public class VendorController {
     }
 
     @PutMapping("/{id}")
-    public String edit(@PathVariable("id") int id, @ModelAttribute("vendor") Vendor vendor) {
+    public String edit(@PathVariable("id") int id, @ModelAttribute("vendor") @Valid Vendor vendor, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return TEMPLATE_PATH + "edit";
+        }
         vendorService.save(vendor);
         return REDIRECT;
     }

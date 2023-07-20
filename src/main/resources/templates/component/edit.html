@@ -5,19 +5,26 @@
     <title>config builder</title>
 </head>
 <body>
+
     <hr />
     <a th:href="@{/}">Главная</a>
     | <a th:href="@{/component}">Назад</a>
     <hr />
+
     <form th:method="put" th:action="@{/component/{id} (id=${component.getId()})}" th:object="${component}">
 
         <label for="name">Название компонента : </label>
-        <input type="text" id="name" th:field="*{name}" th:value="${component.getName()}" /><br />
+        <input type="text" id="name" th:field="*{name}" th:value="${component.getName()}" />
+        <div th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
+        <br />
 
         <label for="title">Заголовок компонента</label>
-        <input type="text" id="title" th:field="*{title}" /><br />
+        <input type="text" id="title" th:field="*{title}" />
+        <div th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></div>
+        <br />
 
         <button type="submit">Изменить</button>
+
     </form>
 </body>
 </html>

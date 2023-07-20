@@ -2,9 +2,11 @@ package com.github.staego.config_builder.controllers;
 
 import com.github.staego.config_builder.models.Component;
 import com.github.staego.config_builder.services.ComponentService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
@@ -32,7 +34,10 @@ public class ComponentController {
     }
 
     @PostMapping
-    public String add(@ModelAttribute("component") Component component) {
+    public String add(@ModelAttribute("component") @Valid Component component, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return TEMPLATE_PATH + "add";
+        }
         componentService.save(component);
         return REDIRECT;
     }
@@ -44,7 +49,10 @@ public class ComponentController {
     }
 
     @PutMapping("/{id}")
-    public String edit(@PathVariable("id") int id, @ModelAttribute("component") Component component) {
+    public String edit(@PathVariable("id") int id, @ModelAttribute("component") @Valid Component component, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return TEMPLATE_PATH + "edit";
+        }
         componentService.save(component);
         return REDIRECT;
     }
